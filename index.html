@@ -1,0 +1,187 @@
+<html lang="en">
+
+<script
+        src="https://code.jquery.com/jquery-3.4.1.js"
+        integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
+        crossorigin="anonymous"></script>
+
+<script src="script.js"></script>
+
+    <style>
+
+        table {
+
+            border: 3px solid black;
+
+        }
+
+        td {
+
+            width: 50px;
+            height: 50px;
+            background-color: lightgray;
+            border: 1px solid dimgray;
+            text-align: center;
+            font-family: sans-serif, serif;
+
+        }
+
+        td:hover {
+
+            background-color: darkgray;
+
+        }
+
+        .border-right {
+
+            border-right: 2px solid black
+
+        }
+
+        .border-bottom td {
+
+            border-bottom: 2px solid black;
+
+        }
+
+        table {
+
+            border-collapse: collapse;
+
+        }
+
+    </style>
+
+    <head>
+        <meta charset="UTF-8">
+        <title>Sudoku</title>
+    </head>
+
+    <body>
+
+        <table>
+
+            <tr>
+                <td></td>
+                <td></td>
+                <td class='border-right'></td>
+                <td></td>
+                <td></td>
+                <td class="border-right"></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+
+            <tr>
+                <td></td>
+                <td></td>
+                <td class='border-right'></td>
+                <td></td>
+                <td></td>
+                <td class="border-right"></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+
+            <tr class="border-bottom">
+                <td></td>
+                <td></td>
+                <td class='border-right'></td>
+                <td></td>
+                <td></td>
+                <td class="border-right"></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+
+            <tr>
+                <td></td>
+                <td></td>
+                <td class='border-right'></td>
+                <td></td>
+                <td></td>
+                <td class="border-right"></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+
+            <tr>
+                <td></td>
+                <td></td>
+                <td class='border-right'></td>
+                <td></td>
+                <td></td>
+                <td class="border-right"></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+
+            <tr class="border-bottom">
+                <td></td>
+                <td></td>
+                <td class='border-right'></td>
+                <td></td>
+                <td></td>
+                <td class="border-right"></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+
+            <tr>
+                <td></td>
+                <td></td>
+                <td class='border-right'></td>
+                <td></td>
+                <td></td>
+                <td class="border-right"></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+
+            <tr>
+                <td></td>
+                <td></td>
+                <td class='border-right'></td>
+                <td></td>
+                <td></td>
+                <td class="border-right"></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+
+            <tr>
+                <td></td>
+                <td></td>
+                <td class='border-right'></td>
+                <td></td>
+                <td></td>
+                <td class="border-right"></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+
+        </table>
+
+    </body>
+
+</html>
+
+<script>
+
+    $(document).ready(function () {
+
+        var boardNumbers = generateBoardNumbers();
+        generateBoard(boardNumbers);
+        var sudoku = new Sudoku(boardNumbers);
+
+    });
+</script>
