@@ -45,7 +45,7 @@ https://devinduct.com/blogpost/22/javascript-clean-code-best-practices
 
 ## Implementação
 
-Utilizado o [GitHub Pages](Utilizado o GitHub Pages para disponibilização do código via Web.) para disponibilização do código via Web.
+Utilizado o [GitHub Pages](https://pages.github.com/) para disponibilização do código via Web.
 
 ## Construído com
 
