@@ -45,8 +45,10 @@ https://devinduct.com/blogpost/22/javascript-clean-code-best-practices
 
 ## Implementação
 
-Utilizado o [GitHub Pages](https://pages.github.com/) para disponibilização do código via Web.
-
+Utilizado o [GitHub Pages](https://pages.github.com/) para disponibilização do código via Web. Ele se encarrega de realizar o deploy dos commits realizados.
+```
+O GitHub Pages é um serviço de hospedagem de site estático e não suporta server-side code, como PHP, Ruby ou Python.
+```
 ## Construído com
 
 * [jQuery](https://jquery.com/download/) - Biblioteca de funções JavaScript que interage com o HTML, desenvolvida para simplificar os scripts interpretados no navegador do cliente. Usada por cerca de 74.4% dos 10 mil sites mais visitados do mundo, jQuery é a mais popular das bibliotecas JavaScript.
