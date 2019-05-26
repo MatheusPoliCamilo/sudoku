@@ -1,17 +1,28 @@
 //Constante utilizada para a validação do Sudoku
-const validator = [1, 2, 3, 4, 5, 6, 7, 8 ,9];
+const validator = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+
+//Procedimentos realizados quando o documento está totalmente carregado
+$(document).ready(() => {
+
+    var boardNumbers = generateBoardNumbers();
+    generateBoard(boardNumbers);
+    var sudoku = new Sudoku(boardNumbers);
+
+});
 
 class Sudoku {
 
     constructor(boardNumbers) {
 
-        this.setRows(boardNumbers);
-        this.setColumns(boardNumbers);
+        this.rows = boardNumbers;
+        this.setColumns();
+        //Cria arrays com os blocos do Sudoku baseado nas linhas informadas
+        this.setBlocks();
 
     }
 
     //Gera os arrays apenas com as linhas do Sudoku
-    setRows(boardNumbers) {
+    set rows(boardNumbers) {
 
         this.firstRow = boardNumbers[0];
         this.secondRow = boardNumbers[1];
@@ -25,19 +36,138 @@ class Sudoku {
 
     }
 
-    //Gera os arrays apenas com as colunas do Sudoku
     setColumns(boardNumbers) {
 
-        this.firstColumn = boardNumbers[0][0];
-        this.secondColumn = boardNumbers[1][0];
-        this.thirdColumn = boardNumbers[2][0];
-        this.fourthColumn = boardNumbers[3][0];
-        this.fifthColumn = boardNumbers[4][0];
-        this.sixthColumn = boardNumbers[5][0];
-        this.seventhColumn = boardNumbers[6][0];
-        this.eighthColumn = boardNumbers[7][0];
-        this.ninthColumn = boardNumbers[8][0];
 
+
+    }
+
+    //Cria arrays com os blocos do Sudoku baseado nas linhas da classe do Sudoku
+    setBlocks() {
+
+        this.firstBlock = takeNumbersOfBlocks(this.rows).firstBlock;
+        this.secondBlock = takeNumbersOfBlocks(this.rows).secondBlock;
+        this.thirdBlock = takeNumbersOfBlocks(this.rows).thirdBlock;
+        this.fourthBlock = takeNumbersOfBlocks(this.rows).fourthBlock;
+        this.fifthBlock = takeNumbersOfBlocks(this.rows).fifthBlock;
+        this.sixthBlock = takeNumbersOfBlocks(this.rows).sixthBlock;
+        this.seventhBlock = takeNumbersOfBlocks(this.rows).seventhBlock;
+        this.eighthBlock = takeNumbersOfBlocks(this.rows).eighthBlock;
+        this.ninthBlock = takeNumbersOfBlocks(this.rows).ninthBlock;
+
+    }
+
+    get rows() {
+
+        return [
+            this.firstRow,
+            this.secondRow,
+            this.thirdRow,
+            this.fourthRow,
+            this.fifthRow,
+            this.sixthRow,
+            this.seventhRow,
+            this.eighthRow,
+            this.ninthRow
+        ]
+
+    }
+
+    get columns() {
+
+        return [
+
+            this.firstColumn,
+            this.secondColumn,
+            this.thirdColumn,
+            this.fourthColumn,
+            this.fifthColumn,
+            this.sixthColumn,
+            this.seventhColumn,
+            this.eighthColumn,
+            this.ninthColumn
+
+        ]
+
+    }
+
+    get blocks() {
+
+        return [
+            this.firstBlock,
+            this.secondBlock,
+            this.thirdBlock,
+            this.fourthBlock,
+            this.fifthBlock,
+            this.sixthBlock,
+            this.seventhBlock,
+            this.eighthBlock,
+            this.ninthBlock
+        ]
+
+    }
+
+}
+
+//Retorna um objeto com os números de cada bloco do Sudoku
+function takeNumbersOfBlocks(rows) {
+
+    let firstBlock = [];
+    let secondBlock = [];
+    let thirdBlock = [];
+    let fourthBlock = [];
+    let fifthBlock = [];
+    let sixthBlock = [];
+    let seventhBlock = [];
+    let eighthBlock = [];
+    let ninthBlock = [];
+
+    for (let i = 0; i < 9; i++) {
+
+        if (i < 3) {
+
+            firstBlock.push(rowsIntoSudokuPieces(rows[i]).firstPiece);
+            secondBlock.push(rowsIntoSudokuPieces(rows[i]).secondPiece);
+            thirdBlock.push(rowsIntoSudokuPieces(rows[i]).thirdPiece);
+
+        } else if (i < 6) {
+
+            fourthBlock.push(rowsIntoSudokuPieces(rows[i]).firstPiece);
+            fifthBlock.push(rowsIntoSudokuPieces(rows[i]).secondPiece);
+            sixthBlock.push(rowsIntoSudokuPieces(rows[i]).thirdPiece);
+
+        } else {
+
+            seventhBlock.push(rowsIntoSudokuPieces(rows[i]).firstPiece);
+            eighthBlock.push(rowsIntoSudokuPieces(rows[i]).secondPiece);
+            ninthBlock.push(rowsIntoSudokuPieces(rows[i]).thirdPiece);
+
+        }
+
+    }
+
+    return {
+        firstBlock: firstBlock,
+        secondBlock: secondBlock,
+        thirdBlock: thirdBlock,
+        fourthBlock: fourthBlock,
+        fifthBlock: fifthBlock,
+        sixthBlock: sixthBlock,
+        seventhBlock: seventhBlock,
+        eighthBlock: eighthBlock,
+        ninthBlock: ninthBlock
+    }
+
+}
+
+
+//Retorna um objeto com os 3 pedaços do Sudoku, baseado nas linhas informadas
+function rowsIntoSudokuPieces(row) {
+
+    return {
+        firstPiece: row.slice(0, 3),
+        secondPiece: row.slice(3, 6),
+        thirdPiece: row.slice(6, 9)
     }
 
 }
@@ -46,23 +176,23 @@ class Sudoku {
 function generateBoardNumbers() {
 
     return [
-        [5,0,0,0,3,9,0,1,0],
-        [6,1,0,0,0,0,0,2,0],
-        [8,4,0,0,1,0,3,0,0],
-        [0,0,4,0,0,0,1,6,7],
-        [0,0,5,4,6,0,0,0,0],
-        [7,6,2,1,0,8,0,0,0],
-        [0,0,0,0,7,2,0,3,0],
-        [0,0,0,0,0,3,9,8,6],
-        [3,5,6,9,0,0,0,0,0]
+        [5, 0, 0, 0, 3, 9, 0, 1, 0],
+        [6, 1, 0, 0, 0, 0, 0, 2, 0],
+        [8, 4, 0, 0, 1, 0, 3, 0, 0],
+        [0, 0, 4, 0, 0, 0, 1, 6, 7],
+        [0, 0, 5, 4, 6, 0, 0, 0, 0],
+        [7, 6, 2, 1, 0, 8, 0, 0, 0],
+        [0, 0, 0, 0, 7, 2, 0, 3, 0],
+        [0, 0, 0, 0, 0, 3, 9, 8, 6],
+        [3, 5, 6, 9, 0, 0, 0, 0, 0]
     ];
 
 }
 
-//Completa o tabuleiro do Sudoku baseado no array multidimensional de números feito pela função generateBoardNumbers()
+//Completa o tabuleiro do Sudoku baseado no array multidimensional informado
 function generateBoard(boardNumbers) {
 
-    boardNumbers.forEach(function (arrayRow, rowNumber) {
+    boardNumbers.forEach((arrayRow, rowNumber) => {
 
         let boardRow = jQueryElementRow(rowNumber);
 
@@ -82,7 +212,7 @@ function jQueryElementRow(rowNumber) {
 //Escreve na linha do tabuleiro especificada os números informados
 function writeOnRow(boardRow, arrayRow) {
 
-    boardRow.find('td').each(function (cellNumber, boardCell) {
+    boardRow.find('td').each((cellNumber, boardCell) => {
 
         //Armazena o número para escrever na célula do tabuleiro em uma variável de escopo
         let numberToWrite = arrayRow[cellNumber];

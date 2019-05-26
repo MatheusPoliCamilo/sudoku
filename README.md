@@ -56,4 +56,4 @@ O GitHub Pages é um serviço de hospedagem de site estático e não suporta ser
 
 ## Autor
 
-* **Matheus Poli** - [GitHub](https://github.com/MatheusPoli) - [LinkedIn](https://www.linkedin.com/in/matheus-poli-332593127/)
+* **Matheus Poli** - [GitHub](https://github.com/MatheusPoliCamilo) - [LinkedIn](https://www.linkedin.com/in/matheus-poli-332593127/)
