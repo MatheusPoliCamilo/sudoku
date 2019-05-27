@@ -4,9 +4,11 @@ const validator = [1, 2, 3, 4, 5, 6, 7, 8, 9];
 //Procedimentos realizados quando o documento está totalmente carregado
 $(document).ready(() => {
 
-    var boardNumbers = generateBoardNumbers();
+    let boardNumbers = generateBoardNumbers();
     generateBoard(boardNumbers);
-    var sudoku = new Sudoku(boardNumbers);
+    let sudoku = new Sudoku(boardNumbers);
+    let validator = new Validator();
+    validator.checkBoard(sudoku);
 
 });
 
@@ -15,61 +17,36 @@ class Sudoku {
     constructor(boardNumbers) {
 
         this.rows = boardNumbers;
-        this.setColumns();
-        //Cria arrays com os blocos do Sudoku baseado nas linhas informadas
-        this.setBlocks();
+        this.columns = this.takeNumbersOfColumns();
+        this.blocks = this.takeNumbersOfBlocks();
+
+    }
+
+    //Retorna um array com todas as linhas do Sudoku
+    get rows() {
+
+        let rows = [];
+
+        this.row.forEach((row, key) => {
+
+            rows[key] = row;
+
+        });
+
+        return rows;
 
     }
 
     //Gera os arrays apenas com as linhas do Sudoku
     set rows(boardNumbers) {
 
-        this.firstRow = boardNumbers[0];
-        this.secondRow = boardNumbers[1];
-        this.thirdRow = boardNumbers[2];
-        this.fourthRow = boardNumbers[3];
-        this.fifthRow = boardNumbers[4];
-        this.sixthRow = boardNumbers[5];
-        this.seventhRow = boardNumbers[6];
-        this.eighthRow = boardNumbers[7];
-        this.ninthRow = boardNumbers[8];
+        this.row = [];
 
-    }
+        boardNumbers.forEach((row, key) => {
 
-    setColumns(boardNumbers) {
+            this.row[key] = row;
 
-
-
-    }
-
-    //Cria arrays com os blocos do Sudoku baseado nas linhas da classe do Sudoku
-    setBlocks() {
-
-        this.firstBlock = takeNumbersOfBlocks(this.rows).firstBlock;
-        this.secondBlock = takeNumbersOfBlocks(this.rows).secondBlock;
-        this.thirdBlock = takeNumbersOfBlocks(this.rows).thirdBlock;
-        this.fourthBlock = takeNumbersOfBlocks(this.rows).fourthBlock;
-        this.fifthBlock = takeNumbersOfBlocks(this.rows).fifthBlock;
-        this.sixthBlock = takeNumbersOfBlocks(this.rows).sixthBlock;
-        this.seventhBlock = takeNumbersOfBlocks(this.rows).seventhBlock;
-        this.eighthBlock = takeNumbersOfBlocks(this.rows).eighthBlock;
-        this.ninthBlock = takeNumbersOfBlocks(this.rows).ninthBlock;
-
-    }
-
-    get rows() {
-
-        return [
-            this.firstRow,
-            this.secondRow,
-            this.thirdRow,
-            this.fourthRow,
-            this.fifthRow,
-            this.sixthRow,
-            this.seventhRow,
-            this.eighthRow,
-            this.ninthRow
-        ]
+        });
 
     }
 
@@ -91,6 +68,20 @@ class Sudoku {
 
     }
 
+    set columns(numbersOfColumns) {
+
+        this.firstColumn = numbersOfColumns[0];
+        this.secondColumn = numbersOfColumns[1];
+        this.thirdColumn = numbersOfColumns[2];
+        this.fourthColumn = numbersOfColumns[3];
+        this.fifthColumn = numbersOfColumns[4];
+        this.sixthColumn = numbersOfColumns[5];
+        this.seventhColumn = numbersOfColumns[6];
+        this.eighthColumn = numbersOfColumns[7];
+        this.ninthColumn = numbersOfColumns[8];
+
+    }
+
     get blocks() {
 
         return [
@@ -107,67 +98,177 @@ class Sudoku {
 
     }
 
-}
+    //Cria arrays com os blocos do Sudoku baseado nas linhas da classe do Sudoku
+    set blocks(numbersOfBlocks) {
 
-//Retorna um objeto com os números de cada bloco do Sudoku
-function takeNumbersOfBlocks(rows) {
+        this.firstBlock = numbersOfBlocks.firstBlock;
+        this.secondBlock = numbersOfBlocks.secondBlock;
+        this.thirdBlock = numbersOfBlocks.thirdBlock;
+        this.fourthBlock = numbersOfBlocks.fourthBlock;
+        this.fifthBlock = numbersOfBlocks.fifthBlock;
+        this.sixthBlock = numbersOfBlocks.sixthBlock;
+        this.seventhBlock = numbersOfBlocks.seventhBlock;
+        this.eighthBlock = numbersOfBlocks.eighthBlock;
+        this.ninthBlock = numbersOfBlocks.ninthBlock;
 
-    let firstBlock = [];
-    let secondBlock = [];
-    let thirdBlock = [];
-    let fourthBlock = [];
-    let fifthBlock = [];
-    let sixthBlock = [];
-    let seventhBlock = [];
-    let eighthBlock = [];
-    let ninthBlock = [];
+    }
 
-    for (let i = 0; i < 9; i++) {
+    takeNumbersOfColumns() {
 
-        if (i < 3) {
+        let columns = [[], [], [], [], [], [], [], [], []];
 
-            firstBlock.push(rowsIntoSudokuPieces(rows[i]).firstPiece);
-            secondBlock.push(rowsIntoSudokuPieces(rows[i]).secondPiece);
-            thirdBlock.push(rowsIntoSudokuPieces(rows[i]).thirdPiece);
+        this.rows.forEach((row) => {
 
-        } else if (i < 6) {
+            columns[0].push(row[0]);
+            columns[1].push(row[1]);
+            columns[2].push(row[2]);
+            columns[3].push(row[3]);
+            columns[4].push(row[4]);
+            columns[5].push(row[5]);
+            columns[6].push(row[6]);
+            columns[7].push(row[7]);
+            columns[8].push(row[8]);
 
-            fourthBlock.push(rowsIntoSudokuPieces(rows[i]).firstPiece);
-            fifthBlock.push(rowsIntoSudokuPieces(rows[i]).secondPiece);
-            sixthBlock.push(rowsIntoSudokuPieces(rows[i]).thirdPiece);
+        });
 
-        } else {
+        return columns;
 
-            seventhBlock.push(rowsIntoSudokuPieces(rows[i]).firstPiece);
-            eighthBlock.push(rowsIntoSudokuPieces(rows[i]).secondPiece);
-            ninthBlock.push(rowsIntoSudokuPieces(rows[i]).thirdPiece);
+    }
 
+    //Retorna um objeto com os números 3 pedaços do Sudoku, baseado nas linhas informadas, para dividí-los em blocos
+    rowsIntoSudokuPieces(rowNumber) {
+
+        return {
+            firstPiece: this.rows[rowNumber].slice(0, 3),
+            secondPiece: this.rows[rowNumber].slice(3, 6),
+            thirdPiece: this.rows[rowNumber].slice(6, 9)
         }
 
     }
 
-    return {
-        firstBlock: firstBlock,
-        secondBlock: secondBlock,
-        thirdBlock: thirdBlock,
-        fourthBlock: fourthBlock,
-        fifthBlock: fifthBlock,
-        sixthBlock: sixthBlock,
-        seventhBlock: seventhBlock,
-        eighthBlock: eighthBlock,
-        ninthBlock: ninthBlock
+    //Retorna um objeto com os números de cada bloco do Sudoku
+    takeNumbersOfBlocks() {
+
+        let firstBlock = [],
+            secondBlock = [],
+            thirdBlock = [],
+            fourthBlock = [],
+            fifthBlock = [],
+            sixthBlock = [],
+            seventhBlock = [],
+            eighthBlock = [],
+            ninthBlock = [];
+
+        for (let i = 0; i < 9; i++) {
+
+
+            if (i < 3) {
+
+                firstBlock.push(this.rowsIntoSudokuPieces(i).firstPiece);
+                secondBlock.push(this.rowsIntoSudokuPieces(i).secondPiece);
+                thirdBlock.push(this.rowsIntoSudokuPieces(i).thirdPiece);
+            }
+
+            else if (i < 6) {
+
+                fourthBlock.push(this.rowsIntoSudokuPieces(i).firstPiece);
+                fifthBlock.push(this.rowsIntoSudokuPieces(i).secondPiece);
+                sixthBlock.push(this.rowsIntoSudokuPieces(i).thirdPiece);
+
+            }
+
+            else {
+
+                seventhBlock.push(this.rowsIntoSudokuPieces(i).firstPiece);
+                eighthBlock.push(this.rowsIntoSudokuPieces(i).secondPiece);
+                ninthBlock.push(this.rowsIntoSudokuPieces(i).thirdPiece);
+
+            }
+
+        }
+
+        // firstBlock = firstBlock.reduce((accumulator, currentValue) => {
+        //         return accumulator.concat(currentValue);
+        //     },
+        //     []
+        // );
+
+        return {
+            firstBlock: firstBlock,
+            secondBlock: secondBlock,
+            thirdBlock: thirdBlock,
+            fourthBlock: fourthBlock,
+            fifthBlock: fifthBlock,
+            sixthBlock: sixthBlock,
+            seventhBlock: seventhBlock,
+            eighthBlock: eighthBlock,
+            ninthBlock: ninthBlock
+        }
+
     }
+
 
 }
 
+class Validator {
 
-//Retorna um objeto com os 3 pedaços do Sudoku, baseado nas linhas informadas
-function rowsIntoSudokuPieces(row) {
+    checkBoard(sudoku) {
 
-    return {
-        firstPiece: row.slice(0, 3),
-        secondPiece: row.slice(3, 6),
-        thirdPiece: row.slice(6, 9)
+        this.checkRows(sudoku.rows);
+        this.checkColumns(sudoku.columns);
+
+    }
+
+    checkRows(rows) {
+
+        rows.forEach((row, key) => {
+
+            //Linha sem células vazias
+            let rowWithoutEmptyCell = _.without(row, 0);
+            //Linha sem células repetidas e sem 0
+            let uniqRow = _.without(_.uniq(row), 0);
+
+            if (rowWithoutEmptyCell.length !== uniqRow.length) {
+
+                let values = [];
+
+                row.forEach((rowNumber) => {
+
+                    let wrongNumber = _.find(values, (numberInRowChecker) => {
+
+                        return rowNumber === numberInRowChecker;
+
+                    });
+
+                    if (wrongNumber !== 0 && wrongNumber !== undefined) {
+
+                        //Pega o index do primeiro número incorreto da linha
+                        let indexWrong = _.findIndex(row, (rowNumber) => {
+
+                            return rowNumber === wrongNumber;
+
+                        });
+
+                        //Pega o index último número incorreto da linha
+                        let secondIndexWrong = _.findLastIndex(row, (rowNumber) => {
+
+                            return rowNumber === wrongNumber;
+
+                        });
+
+                        $($($('tr')[key]).children()[indexWrong]).addClass('error');
+                        $($($('tr')[key]).children()[secondIndexWrong]).addClass('error');
+
+                    }
+
+                    values.push(rowNumber);
+
+                });
+
+            }
+
+        });
+
     }
 
 }
@@ -176,7 +277,7 @@ function rowsIntoSudokuPieces(row) {
 function generateBoardNumbers() {
 
     return [
-        [5, 0, 0, 0, 3, 9, 0, 1, 0],
+        [5, 1, 0, 0, 3, 9, 0, 1, 0],
         [6, 1, 0, 0, 0, 0, 0, 2, 0],
         [8, 4, 0, 0, 1, 0, 3, 0, 0],
         [0, 0, 4, 0, 0, 0, 1, 6, 7],
