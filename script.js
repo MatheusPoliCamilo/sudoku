@@ -2,7 +2,7 @@
 const validator = [1, 2, 3, 4, 5, 6, 7, 8, 9];
 
 //Procedimentos realizados quando o documento está totalmente carregado
-$(document).ready(() => {
+document.addEventListener("DOMContentLoaded", () => {
 
     let boardNumbers = generateBoardNumbers();
     generateBoard(boardNumbers);
@@ -10,11 +10,8 @@ $(document).ready(() => {
     let validator = new Validator();
     validator.checkBoard(sudoku);
 
-    $('#btn-reload').click(() => {
-
-        location.reload();
-
-    });
+    //Recarrega a página ao clicar no botão de "recarregar", resetando o tabuleiro
+    document.querySelector('#btn-reload').onclick(location.reload());
 
 });
 
@@ -388,6 +385,7 @@ class Validator {
 
 }
 
+//Retorna um array com 9 números aleatórios entre 0 e 9
 function getRandomArray() {
 
     return [
@@ -404,6 +402,7 @@ function getRandomArray() {
 
 }
 
+//Gera um número aleatório com probabilidade, qualquer número que não esteja entre 1 e 9 se torna 0
 function getRandomNumber() {
 
     if (Math.floor((Math.random() * 35)) > 9) {
@@ -417,7 +416,7 @@ function getRandomNumber() {
 }
 
 //Gera manualmente um array multidimensional com os valores aleatórios entre 0 e 9 para cada célula do Sudoku
-//Valor 0 significa célula vazia no tabuleiro
+//Valor 0 significa célula vazia no tabuleiro e ele possui probabilidade aumentada
 function generateBoardNumbers() {
 
     return [

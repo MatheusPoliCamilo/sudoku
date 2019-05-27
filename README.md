@@ -10,7 +10,7 @@ Dado um tabuleiro de Sudoku preenchido totalmente ou parcialmente, validá-lo co
 
 ## Começando
 
-Code challenge de validação de Sudoku, utilizando JavaScript, jQuery, OOP e inspirado em boas práticas de programação como Clean Clode.
+Code challenge de validação de Sudoku, utilizando JavaScript, OOP e inspirado em boas práticas de programação como Clean Clode.
 
 As instruções abaixo demonstrarão o necessário para criar um projeto semelhante em JavaScript.
 
@@ -18,7 +18,6 @@ As instruções abaixo demonstrarão o necessário para criar um projeto semelha
 
 ```
 ES6 (JavaScript)
-jQuery >= 3.4.1
 Lodash
 HTML & CSS
 Object-oriented programming
@@ -26,24 +25,13 @@ Object-oriented programming
 
 ### Instalando
 
-Apenas o jQuery necessitará do uso de sua CDN (Rede de Distribuição de Conteúdo), que neste projeto foi a CDN referente à versão 3.4.1. Apenas copie o HTML snippet abaixo e cole em sua página Web.
-
-```
-<script
-  src="https://code.jquery.com/jquery-3.4.1.js"
-  integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
-  crossorigin="anonymous"></script>
-```
-
-Você também pode optar por baixar os arquivos do [jQuery](https://jquery.com/download/) em vez de utilizar a CDN, para poder analisar o código fonte e também para integração com seu IDE ou editor de texto.
-
-A biblioteca Lodash também pode ser utilizada via CDN:
+A biblioteca Lodash também pode ser utilizada via CDN (Rede de Distribuição de Conteúdo):
 
 ```
 <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.11/lodash.min.js"></script>
 ```
 
-Caso contrário, assim como o jQuery você pode [baixar](https://lodash.com/) para analisar o código fonte e também para a intregração com IDE ou editor de texto.
+Caso contrário, você pode [baixar](https://lodash.com/) para analisar o código fonte e também para a intregração com seu IDE ou editor de texto.
 
 ### Sugestões
 
@@ -55,7 +43,7 @@ https://devinduct.com/blogpost/22/javascript-clean-code-best-practices
 
 ## Implementação
 
-Utilizado o [GitHub Pages](https://pages.github.com/) para disponibilização do código via Web. Ele se encarrega de realizar o deploy dos commits realizados.
+Utilizado o [GitHub Pages](https://pages.github.com/) para disponibilização do código via Web. Ele se encarrega de fazer o deploy dos commits realizados.
 ```
 O GitHub Pages é um serviço de hospedagem de site estático e não suporta server-side code, como PHP, Ruby ou Python.
 ```
