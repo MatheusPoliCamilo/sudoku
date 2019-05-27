@@ -19,6 +19,7 @@ As instruções abaixo demonstrarão o necessário para criar um projeto semelha
 ```
 ES6 (JavaScript)
 jQuery >= 3.4.1
+Lodash
 HTML & CSS
 Object-oriented programming
 ```
@@ -35,6 +36,15 @@ Apenas o jQuery necessitará do uso de sua CDN (Rede de Distribuição de Conte�
 ```
 
 Você também pode optar por baixar os arquivos do [jQuery](https://jquery.com/download/) em vez de utilizar a CDN, para poder analisar o código fonte e também para integração com seu IDE ou editor de texto.
+
+A biblioteca Lodash também pode ser utilizada via CDN:
+
+```
+<script src="https://cdn.jsdelivr.net/npm/lodash@4.17.11/lodash.min.js"></script>
+```
+
+Caso contrário, assim como o jQuery você pode [baixar](https://lodash.com/) para analisar o código fonte e também para a intregração com IDE ou editor de texto.
+
 ### Sugestões
 
 Recomendo a leitura do artigo [Javascript Clean Code Best Practices](https://devinduct.com/blogpost/22/javascript-clean-code-best-practices), para boas práticas de Clean Code com JavaScript.
@@ -52,6 +62,7 @@ O GitHub Pages é um serviço de hospedagem de site estático e não suporta ser
 ## Construído com
 
 * [jQuery](https://jquery.com/download/) - Biblioteca de funções JavaScript que interage com o HTML, desenvolvida para simplificar os scripts interpretados no navegador do cliente. Usada por cerca de 74.4% dos 10 mil sites mais visitados do mundo, jQuery é a mais popular das bibliotecas JavaScript.
+* [Lodash](https://lodash.com/) - Lodash é uma biblioteca JavaScript que fornece funções utilitárias para tarefas comuns de programação usando o paradigma de programação funcional.
 * [PhpStorm](https://www.jetbrains.com/phpstorm/) - Ambiente de Desenvolvimento Integrado que fornece um editor para PHP, HTML e JavaScript com análise de código em tempo real, prevenção de erros e refatoração automatizada para código PHP e JavaScript.
 
 ## Autor

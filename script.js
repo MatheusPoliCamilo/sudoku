@@ -10,6 +10,12 @@ $(document).ready(() => {
     let validator = new Validator();
     validator.checkBoard(sudoku);
 
+    $('#btn-reload').click(() => {
+
+        location.reload();
+
+    });
+
 });
 
 class Sudoku {
@@ -187,12 +193,6 @@ class Sudoku {
 
         }
 
-        // firstBlock = firstBlock.reduce((accumulator, currentValue) => {
-        //         return accumulator.concat(currentValue);
-        //     },
-        //     []
-        // );
-
         return {
             firstBlock: firstBlock,
             secondBlock: secondBlock,
@@ -216,6 +216,7 @@ class Validator {
 
         this.checkRows(sudoku.rows);
         this.checkColumns(sudoku.columns);
+        this.checkBlocks(sudoku.blocks);
 
     }
 
@@ -225,7 +226,7 @@ class Validator {
 
             //Linha sem células vazias
             let rowWithoutEmptyCell = _.without(row, 0);
-            //Linha sem células repetidas e sem 0
+            //Linha sem células repetidas ou vazias
             let uniqRow = _.without(_.uniq(row), 0);
 
             if (rowWithoutEmptyCell.length !== uniqRow.length) {
@@ -275,8 +276,10 @@ class Validator {
 
         columns.forEach((column, key) => {
 
+            //Coluna sem células vazias
             let columnWithoutEmptyCell = _.without(column, 0);
-            let uniqColumn = _.without(_.uniq(column),0);
+            //Coluna sem células repetidas ou vazias
+            let uniqColumn = _.without(_.uniq(column), 0);
 
             if (columnWithoutEmptyCell.length !== uniqColumn.length) {
 
@@ -306,8 +309,8 @@ class Validator {
 
                         });
 
-                        $($(`table tr > td:nth-child(${key+1})`)[indexWrong]).addClass('error');
-                        $($(`table tr > td:nth-child(${key+1})`)[secondIndexWrong]).addClass('error');
+                        $($(`table tr > td:nth-child(${key + 1})`)[indexWrong]).addClass('error');
+                        $($(`table tr > td:nth-child(${key + 1})`)[secondIndexWrong]).addClass('error');
 
                     }
 
@@ -321,21 +324,112 @@ class Validator {
 
     }
 
+    checkBlocks(blocks) {
+
+        blocks.forEach((block, key) => {
+
+            //Bloco em um único array
+            let blockArray = _.flatten(block);
+
+            //Bloco sem células vazias
+            let blockWithoutEmptyCell = _.without(blockArray, 0);
+
+            //Bloco sem células vazias ou repetidas
+            let uniqBlock = _.without(_.uniq(blockArray), 0);
+
+            if (blockWithoutEmptyCell.length !== uniqBlock.length) {
+
+                let values = [];
+
+                blockArray.forEach((number) => {
+
+                    let wrongNumber = _.find(values, (numberBlock) => {
+
+                        return number === numberBlock;
+
+                    });
+
+                    if (wrongNumber !== 0 && wrongNumber !== undefined) {
+
+                        let indexWrong = _.findIndex(blockArray, (number) => {
+
+                            return number === wrongNumber;
+
+                        });
+
+                        let secondIndexWrong = _.findLastIndex(blockArray, (number) => {
+
+                            return number === wrongNumber;
+
+                        });
+
+                        for (let i = 0; i < 8; i++) {
+
+                            if (key === i) {
+
+                                $($(`.bloco${i}`)[indexWrong]).addClass('error');
+                                $($(`.bloco${i}`)[secondIndexWrong]).addClass('error');
+
+                            }
+
+                        }
+
+                    }
+
+                    values.push(number);
+
+                });
+
+            }
+
+        });
+
+    }
+
 }
 
-//Gera um array multidimensional com os valores de cada célula do Sudoku
+function getRandomArray() {
+
+    return [
+        getRandomNumber(),
+        getRandomNumber(),
+        getRandomNumber(),
+        getRandomNumber(),
+        getRandomNumber(),
+        getRandomNumber(),
+        getRandomNumber(),
+        getRandomNumber(),
+        getRandomNumber(),
+    ];
+
+}
+
+function getRandomNumber() {
+
+    if (Math.floor((Math.random() * 35)) > 9) {
+
+        return 0;
+
+    }
+
+    return Math.floor((Math.random() * 9));
+
+}
+
+//Gera manualmente um array multidimensional com os valores aleatórios entre 0 e 9 para cada célula do Sudoku
+//Valor 0 significa célula vazia no tabuleiro
 function generateBoardNumbers() {
 
     return [
-        [5, 1, 0, 0, 3, 9, 0, 1, 0],
-        [6, 1, 0, 0, 0, 0, 0, 2, 0],
-        [8, 4, 0, 0, 1, 0, 3, 0, 0],
-        [0, 0, 4, 0, 0, 0, 1, 6, 7],
-        [0, 0, 5, 4, 6, 0, 0, 0, 0],
-        [7, 6, 2, 1, 0, 8, 0, 0, 0],
-        [0, 0, 0, 0, 7, 2, 0, 3, 0],
-        [0, 5, 0, 0, 0, 3, 9, 8, 6],
-        [3, 5, 6, 9, 0, 0, 0, 0, 0]
+        [] = getRandomArray(),
+        [] = getRandomArray(),
+        [] = getRandomArray(),
+        [] = getRandomArray(),
+        [] = getRandomArray(),
+        [] = getRandomArray(),
+        [] = getRandomArray(),
+        [] = getRandomArray(),
+        [] = getRandomArray()
     ];
 
 }

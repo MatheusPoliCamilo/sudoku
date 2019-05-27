@@ -18,8 +18,8 @@
 
         td {
 
-            width: 50px;
             height: 50px;
+            width: 70px;
             background-color: lightgray;
             border: 1px solid dimgray;
             text-align: center;
@@ -59,10 +59,37 @@
 
         .error {
 
-            background-color: red !important;
+            background-color: #ff00008a;
 
         }
 
+        .container {
+
+            display: flex;
+
+        }
+
+        .buttons{
+
+            flex-direction: column;
+            margin-left: 20px;
+
+        }
+
+        #btn-reload {
+            padding: 15px;
+            font-family: sans-serif, serif;
+            font-size: 20px;
+            color: white;
+            background-color: #007bff;
+            border: 1px solid transparent;
+            border-radius: .25rem;
+            cursor: pointer;
+        }
+
+        #btn-reload:hover {
+            background-color: #0062cb;
+        }
 
     </style>
 
@@ -73,117 +100,125 @@
 
     <body>
 
-        <table>
+        <div class="container">
 
-            <tr>
-                <td class="column1"></td>
-                <td class="column2"></td>
-                <td class='column3'></td>
-                <td class="column4"></td>
-                <td class="column5"></td>
-                <td class="column6"></td>
-                <td class="column7"></td>
-                <td class="column8"></td>
-                <td class="column9"></td>
-            </tr>
+            <table>
 
-            <tr>
-                <td class="column1"></td>
-                <td class="column2"></td>
-                <td class='column3'></td>
-                <td class="column4"></td>
-                <td class="column5"></td>
-                <td class="column6"></td>
-                <td class="column7"></td>
-                <td class="column8"></td>
-                <td class="column9"></td>
-            </tr>
+                <tr>
+                    <td class="bloco0"></td>
+                    <td class="bloco0"></td>
+                    <td class="column3 bloco0"></td>
+                    <td class="bloco1"></td>
+                    <td class="bloco1"></td>
+                    <td class="column6 bloco1"></td>
+                    <td class="bloco2"></td>
+                    <td class="bloco2"></td>
+                    <td class="bloco2"></td>
+                </tr>
 
-            <tr class="border-bottom">
-                <td class="column1"></td>
-                <td class="column2"></td>
-                <td class='column3'></td>
-                <td class="column4"></td>
-                <td class="column5"></td>
-                <td class="column6"></td>
-                <td class="column7"></td>
-                <td class="column8"></td>
-                <td class="column9"></td>
-            </tr>
+                <tr>
+                    <td class="bloco0"></td>
+                    <td class="bloco0"></td>
+                    <td class="column3 bloco0"></td>
+                    <td class="bloco1"></td>
+                    <td class="bloco1"></td>
+                    <td class="column6 bloco1"></td>
+                    <td class="bloco2"></td>
+                    <td class="bloco2"></td>
+                    <td class="bloco2"></td>
+                </tr>
 
-            <tr>
-                <td class="column1"></td>
-                <td class="column2"></td>
-                <td class='column3'></td>
-                <td class="column4"></td>
-                <td class="column5"></td>
-                <td class="column6"></td>
-                <td class="column7"></td>
-                <td class="column8"></td>
-                <td class="column9"></td>
-            </tr>
+                <tr class="border-bottom">
+                    <td class="bloco0"></td>
+                    <td class="bloco0"></td>
+                    <td class="column3 bloco0"></td>
+                    <td class="bloco1"></td>
+                    <td class="bloco1"></td>
+                    <td class="column6 bloco1"></td>
+                    <td class="bloco2"></td>
+                    <td class="bloco2"></td>
+                    <td class="bloco2"></td>
+                </tr>
 
-            <tr>
-                <td class="column1"></td>
-                <td class="column2"></td>
-                <td class='column3'></td>
-                <td class="column4"></td>
-                <td class="column5"></td>
-                <td class="column6"></td>
-                <td class="column7"></td>
-                <td class="column8"></td>
-                <td class="column9"></td>
-            </tr>
+                <tr>
+                    <td class="bloco3"></td>
+                    <td class="bloco3"></td>
+                    <td class="column3 bloco3"></td>
+                    <td class="bloco4"></td>
+                    <td class="bloco4"></td>
+                    <td class="column6 bloco4"></td>
+                    <td class="bloco5"></td>
+                    <td class="bloco5"></td>
+                    <td class="bloco5"></td>
+                </tr>
 
-            <tr class="border-bottom">
-                <td class="column1"></td>
-                <td class="column2"></td>
-                <td class='column3'></td>
-                <td class="column4"></td>
-                <td class="column5"></td>
-                <td class="column6"></td>
-                <td class="column7"></td>
-                <td class="column8"></td>
-                <td class="column9"></td>
-            </tr>
+                <tr>
+                    <td class="bloco3"></td>
+                    <td class="bloco3"></td>
+                    <td class="column3 bloco3"></td>
+                    <td class="bloco4"></td>
+                    <td class="bloco4"></td>
+                    <td class="column6 bloco4"></td>
+                    <td class="bloco5"></td>
+                    <td class="bloco5"></td>
+                    <td class="bloco5"></td>
+                </tr>
 
-            <tr>
-                <td class="column1"></td>
-                <td class="column2"></td>
-                <td class='column3'></td>
-                <td class="column4"></td>
-                <td class="column5"></td>
-                <td class="column6"></td>
-                <td class="column7"></td>
-                <td class="column8"></td>
-                <td class="column9"></td>
-            </tr>
+                <tr class="border-bottom">
+                    <td class="bloco3"></td>
+                    <td class="bloco3"></td>
+                    <td class="column3 bloco3"></td>
+                    <td class="bloco4"></td>
+                    <td class="bloco4"></td>
+                    <td class="column6 bloco4"></td>
+                    <td class="bloco5"></td>
+                    <td class="bloco5"></td>
+                    <td class="bloco5"></td>
+                </tr>
 
-            <tr>
-                <td class="column1"></td>
-                <td class="column2"></td>
-                <td class='column3'></td>
-                <td class="column4"></td>
-                <td class="column5"></td>
-                <td class="column6"></td>
-                <td class="column7"></td>
-                <td class="column8"></td>
-                <td class="column9"></td>
-            </tr>
+                <tr>
+                    <td class="bloco6"></td>
+                    <td class="bloco6"></td>
+                    <td class='column3 bloco6'></td>
+                    <td class="bloco7"></td>
+                    <td class="bloco7"></td>
+                    <td class="column6 bloco7"></td>
+                    <td class="bloco8"></td>
+                    <td class="bloco8"></td>
+                    <td class="bloco8"></td>
+                </tr>
 
-            <tr>
-                <td class="column1"></td>
-                <td class="column2"></td>
-                <td class='column3'></td>
-                <td class="column4"></td>
-                <td class="column5"></td>
-                <td class="column6"></td>
-                <td class="column7"></td>
-                <td class="column8"></td>
-                <td class="column9"></td>
-            </tr>
+                <tr>
+                    <td class="bloco6"></td>
+                    <td class="bloco6"></td>
+                    <td class='column3 bloco6'></td>
+                    <td class="bloco7"></td>
+                    <td class="bloco7"></td>
+                    <td class="column6 bloco7"></td>
+                    <td class="bloco8"></td>
+                    <td class="bloco8"></td>
+                    <td class="bloco8"></td>
+                </tr>
 
-        </table>
+                <tr>
+                    <td class="bloco6"></td>
+                    <td class="bloco6"></td>
+                    <td class='column3 bloco6'></td>
+                    <td class="bloco7"></td>
+                    <td class="bloco7"></td>
+                    <td class="column6 bloco7"></td>
+                    <td class="bloco8"></td>
+                    <td class="bloco8"></td>
+                    <td class="bloco8"></td>
+                </tr>
+
+            </table>
+
+            <div class="buttons">
+                <button id="btn-reload">Recarregar</button>
+            </div>
+
+        </div>
 
     </body>
 
