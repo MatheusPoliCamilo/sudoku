@@ -271,6 +271,56 @@ class Validator {
 
     }
 
+    checkColumns(columns) {
+
+        columns.forEach((column, key) => {
+
+            let columnWithoutEmptyCell = _.without(column, 0);
+            let uniqColumn = _.without(_.uniq(column),0);
+
+            if (columnWithoutEmptyCell.length !== uniqColumn.length) {
+
+                let values = [];
+
+                column.forEach((columnNumber) => {
+
+                    let wrongNumber = _.find(values, (numberInColumnChecker) => {
+
+                        return columnNumber === numberInColumnChecker;
+
+                    });
+
+                    if (wrongNumber !== 0 && wrongNumber !== undefined) {
+
+                        //Pega o index do primeiro número incorreto da coluna
+                        let indexWrong = _.findIndex(column, (columnNumber) => {
+
+                            return columnNumber === wrongNumber;
+
+                        });
+
+                        //Pega o index último número incorreto da linha
+                        let secondIndexWrong = _.findLastIndex(column, (columnNumber) => {
+
+                            return columnNumber === wrongNumber;
+
+                        });
+
+                        $($(`table tr > td:nth-child(${key+1})`)[indexWrong]).addClass('error');
+                        $($(`table tr > td:nth-child(${key+1})`)[secondIndexWrong]).addClass('error');
+
+                    }
+
+                    values.push(columnNumber);
+
+                });
+
+            }
+
+        });
+
+    }
+
 }
 
 //Gera um array multidimensional com os valores de cada célula do Sudoku
@@ -284,7 +334,7 @@ function generateBoardNumbers() {
         [0, 0, 5, 4, 6, 0, 0, 0, 0],
         [7, 6, 2, 1, 0, 8, 0, 0, 0],
         [0, 0, 0, 0, 7, 2, 0, 3, 0],
-        [0, 0, 0, 0, 0, 3, 9, 8, 6],
+        [0, 5, 0, 0, 0, 3, 9, 8, 6],
         [3, 5, 6, 9, 0, 0, 0, 0, 0]
     ];
 
