@@ -11,7 +11,11 @@ document.addEventListener("DOMContentLoaded", () => {
     validator.checkBoard(sudoku);
 
     //Recarrega a página ao clicar no botão de "recarregar", resetando o tabuleiro
-    document.querySelector('#btn-reload').onclick(location.reload());
+    document.querySelector('#btn-reload').addEventListener('click', () => {
+
+        location.reload();
+
+    });
 
 });
 
