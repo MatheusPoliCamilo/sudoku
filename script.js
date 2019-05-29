@@ -29,6 +29,7 @@ class Sudoku {
 
     }
 
+
     //Retorna um array com todas as linhas do Sudoku
     get rows() {
 
@@ -195,15 +196,15 @@ class Sudoku {
         }
 
         return {
-            firstBlock: firstBlock,
-            secondBlock: secondBlock,
-            thirdBlock: thirdBlock,
-            fourthBlock: fourthBlock,
-            fifthBlock: fifthBlock,
-            sixthBlock: sixthBlock,
-            seventhBlock: seventhBlock,
-            eighthBlock: eighthBlock,
-            ninthBlock: ninthBlock
+            firstBlock: firstBlock.flat(),
+            secondBlock: secondBlock.flat(),
+            thirdBlock: thirdBlock.flat(),
+            fourthBlock: fourthBlock.flat(),
+            fifthBlock: fifthBlock.flat(),
+            sixthBlock: sixthBlock.flat(),
+            seventhBlock: seventhBlock.flat(),
+            eighthBlock: eighthBlock.flat(),
+            ninthBlock: ninthBlock.flat()
         }
 
     }
@@ -225,12 +226,7 @@ class Validator {
 
         rows.forEach((row, key) => {
 
-            //Linha sem células vazias
-            let rowWithoutEmptyCell = _.without(row, 0);
-            //Linha sem células repetidas ou vazias
-            let uniqRow = _.without(_.uniq(row), 0);
-
-            if (rowWithoutEmptyCell.length !== uniqRow.length) {
+            if (hasRepeatedNumbers(row)) {
 
                 let values = [];
 
@@ -277,12 +273,7 @@ class Validator {
 
         columns.forEach((column, key) => {
 
-            //Coluna sem células vazias
-            let columnWithoutEmptyCell = _.without(column, 0);
-            //Coluna sem células repetidas ou vazias
-            let uniqColumn = _.without(_.uniq(column), 0);
-
-            if (columnWithoutEmptyCell.length !== uniqColumn.length) {
+            if (hasRepeatedNumbers(column)) {
 
                 let values = [];
 
@@ -329,20 +320,11 @@ class Validator {
 
         blocks.forEach((block, key) => {
 
-            //Bloco em um único array
-            let blockArray = _.flatten(block);
-
-            //Bloco sem células vazias
-            let blockWithoutEmptyCell = _.without(blockArray, 0);
-
-            //Bloco sem células vazias ou repetidas
-            let uniqBlock = _.without(_.uniq(blockArray), 0);
-
-            if (blockWithoutEmptyCell.length !== uniqBlock.length) {
+            if (hasRepeatedNumbers(block)) {
 
                 let values = [];
 
-                blockArray.forEach((number) => {
+                block.forEach((number) => {
 
                     let wrongNumber = _.find(values, (numberBlock) => {
 
@@ -352,13 +334,13 @@ class Validator {
 
                     if (wrongNumber !== 0 && wrongNumber !== undefined) {
 
-                        let indexWrong = _.findIndex(blockArray, (number) => {
+                        let indexWrong = _.findIndex(block, (number) => {
 
                             return number === wrongNumber;
 
                         });
 
-                        let secondIndexWrong = _.findLastIndex(blockArray, (number) => {
+                        let secondIndexWrong = _.findLastIndex(block, (number) => {
 
                             return number === wrongNumber;
 
@@ -386,6 +368,16 @@ class Validator {
         });
 
     }
+
+}
+
+//Verifica se há números repetidos no array informado
+function hasRepeatedNumbers(array) {
+
+    let rowWithoutEmptyCell = _.without(array, 0);
+    let uniqRow = _.without(_.uniq(array), 0);
+
+    return rowWithoutEmptyCell.length !== uniqRow.length;
 
 }
 
