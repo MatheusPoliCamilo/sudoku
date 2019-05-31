@@ -10,7 +10,7 @@ Dado um tabuleiro de Sudoku preenchido totalmente ou parcialmente, validá-lo co
 
 ## Começando
 
-Code challenge de validação de Sudoku, utilizando JavaScript, OOP e inspirado em boas práticas de programação como Clean Clode.
+Code challenge de validação de Sudoku, utilizando HTML, CSS, JavaScript, Lodash e OOP, inspirado em boas práticas de programação como Clean Clode.
 
 As instruções abaixo demonstrarão o necessário para criar um projeto semelhante em JavaScript.
 
@@ -49,7 +49,6 @@ O GitHub Pages é um serviço de hospedagem de site estático e não suporta ser
 ```
 ## Construído com
 
-* [jQuery](https://jquery.com/download/) - Biblioteca de funções JavaScript que interage com o HTML, desenvolvida para simplificar os scripts interpretados no navegador do cliente. Usada por cerca de 74.4% dos 10 mil sites mais visitados do mundo, jQuery é a mais popular das bibliotecas JavaScript.
 * [Lodash](https://lodash.com/) - Lodash é uma biblioteca JavaScript que fornece funções utilitárias para tarefas comuns de programação usando o paradigma de programação funcional.
 * [PhpStorm](https://www.jetbrains.com/phpstorm/) - Ambiente de Desenvolvimento Integrado que fornece um editor para PHP, HTML e JavaScript com análise de código em tempo real, prevenção de erros e refatoração automatizada para código PHP e JavaScript.
 
