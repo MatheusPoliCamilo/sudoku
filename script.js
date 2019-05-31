@@ -8,7 +8,7 @@ document.addEventListener("DOMContentLoaded", () => {
     generateBoard(boardNumbers);
     let sudoku = new Sudoku(boardNumbers);
     let validator = new Validator();
-    validator.checkBoard(sudoku);
+    Validator.checkBoard(sudoku);
 
     //Recarrega a página ao clicar no botão de "recarregar", resetando o tabuleiro
     document.querySelector('#btn-reload').addEventListener('click', () => {
@@ -58,6 +58,7 @@ class Sudoku {
 
     }
 
+    //Retorna um array com todas as colunas do Sudoku
     get columns() {
 
         return [
@@ -76,6 +77,7 @@ class Sudoku {
 
     }
 
+    //Gera separadamente arrays referentes a cada coluna do Sudoku
     set columns(numbersOfColumns) {
 
         this.firstColumn = numbersOfColumns[0];
@@ -90,6 +92,7 @@ class Sudoku {
 
     }
 
+    //Retorna um array com todos os blocos do Sudoku
     get blocks() {
 
         return [
@@ -121,6 +124,7 @@ class Sudoku {
 
     }
 
+    //Baseado nas linhas do Sudoku, gera um array multidimensional com as colunas
     takeNumbersOfColumns() {
 
         let columns = [[], [], [], [], [], [], [], [], []];
@@ -214,160 +218,93 @@ class Sudoku {
 
 class Validator {
 
-    checkBoard(sudoku) {
+    static checkBoard(sudoku) {
 
-        this.checkRows(sudoku.rows);
-        this.checkColumns(sudoku.columns);
-        this.checkBlocks(sudoku.blocks);
+        verifyAndPaintWrongCells(sudoku.rows, 'row');
+        verifyAndPaintWrongCells(sudoku.columns, 'column');
+        verifyAndPaintWrongCells(sudoku.blocks, 'block');
 
     }
 
-    checkRows(rows) {
+}
 
-        rows.forEach((row, key) => {
+//Verifica quais células do tabuleiro estão com números incorretos e marca elas
+function verifyAndPaintWrongCells(arrays, sudokuElement) {
 
-            if (hasRepeatedNumbers(row)) {
+    arrays.forEach((array, key) => {
 
-                let values = [];
+        if (hasRepeatedNumbers(array)) {
 
-                row.forEach((rowNumber) => {
+            let values = [];
 
-                    let wrongNumber = _.find(values, (numberInRowChecker) => {
+            array.forEach((number) => {
 
-                        return rowNumber === numberInRowChecker;
+                let wrongNumber = _.find(values, (arrayNumber) => {
 
-                    });
-
-                    if (wrongNumber !== 0 && wrongNumber !== undefined) {
-
-                        //Pega o index do primeiro número incorreto da linha
-                        let indexWrong = _.findIndex(row, (rowNumber) => {
-
-                            return rowNumber === wrongNumber;
-
-                        });
-
-                        //Pega o index último número incorreto da linha
-                        let secondIndexWrong = _.findLastIndex(row, (rowNumber) => {
-
-                            return rowNumber === wrongNumber;
-
-                        });
-
-                        $($($('tr')[key]).children()[indexWrong]).addClass('error');
-                        $($($('tr')[key]).children()[secondIndexWrong]).addClass('error');
-
-                    }
-
-                    values.push(rowNumber);
+                    return number === arrayNumber;
 
                 });
 
-            }
+                if (wrongNumber !== 0 && wrongNumber !== undefined) {
 
-        });
+                    let indexWrong = _.findIndex(array, (number) => {
 
-    }
-
-    checkColumns(columns) {
-
-        columns.forEach((column, key) => {
-
-            if (hasRepeatedNumbers(column)) {
-
-                let values = [];
-
-                column.forEach((columnNumber) => {
-
-                    let wrongNumber = _.find(values, (numberInColumnChecker) => {
-
-                        return columnNumber === numberInColumnChecker;
+                        return number === wrongNumber;
 
                     });
 
-                    if (wrongNumber !== 0 && wrongNumber !== undefined) {
+                    let secondIndexWrong = _.findLastIndex(array, (number) => {
 
-                        //Pega o index do primeiro número incorreto da coluna
-                        let indexWrong = _.findIndex(column, (columnNumber) => {
-
-                            return columnNumber === wrongNumber;
-
-                        });
-
-                        //Pega o index último número incorreto da linha
-                        let secondIndexWrong = _.findLastIndex(column, (columnNumber) => {
-
-                            return columnNumber === wrongNumber;
-
-                        });
-
-                        $($(`table tr > td:nth-child(${key + 1})`)[indexWrong]).addClass('error');
-                        $($(`table tr > td:nth-child(${key + 1})`)[secondIndexWrong]).addClass('error');
-
-                    }
-
-                    values.push(columnNumber);
-
-                });
-
-            }
-
-        });
-
-    }
-
-    checkBlocks(blocks) {
-
-        blocks.forEach((block, key) => {
-
-            if (hasRepeatedNumbers(block)) {
-
-                let values = [];
-
-                block.forEach((number) => {
-
-                    let wrongNumber = _.find(values, (numberBlock) => {
-
-                        return number === numberBlock;
+                        return number === wrongNumber;
 
                     });
 
-                    if (wrongNumber !== 0 && wrongNumber !== undefined) {
+                    switch (sudokuElement) {
 
-                        let indexWrong = _.findIndex(block, (number) => {
+                        case 'block':
 
-                            return number === wrongNumber;
+                            for (let i = 0; i < 8; i++) {
 
-                        });
+                                if (key === i) {
 
-                        let secondIndexWrong = _.findLastIndex(block, (number) => {
+                                    document.querySelectorAll(`.bloco${i}`)[indexWrong].classList.add('error');
+                                    document.querySelectorAll(`.bloco${i}`)[secondIndexWrong].classList.add('error');
 
-                            return number === wrongNumber;
-
-                        });
-
-                        for (let i = 0; i < 8; i++) {
-
-                            if (key === i) {
-
-                                $($(`.bloco${i}`)[indexWrong]).addClass('error');
-                                $($(`.bloco${i}`)[secondIndexWrong]).addClass('error');
+                                }
 
                             }
 
-                        }
+                            break;
+
+                        case 'column':
+
+                            $($(`table tr > td:nth-child(${key + 1})`)[indexWrong]).addClass('error');
+                            $($(`table tr > td:nth-child(${key + 1})`)[secondIndexWrong]).addClass('error');
+
+                            break;
+
+                        case 'row':
+
+                            $($($('tr')[key]).children()[indexWrong]).addClass('error');
+                            $($($('tr')[key]).children()[secondIndexWrong]).addClass('error');
+
+                            break;
+
+                        default:
+
+                            break;
 
                     }
 
-                    values.push(number);
+                }
 
-                });
+                values.push(number);
 
-            }
+            });
 
-        });
+        }
 
-    }
+    });
 
 }
 
@@ -416,15 +353,15 @@ function getRandomNumber() {
 function generateBoardNumbers() {
 
     return [
-        [] = getRandomArray(),
-        [] = getRandomArray(),
-        [] = getRandomArray(),
-        [] = getRandomArray(),
-        [] = getRandomArray(),
-        [] = getRandomArray(),
-        [] = getRandomArray(),
-        [] = getRandomArray(),
-        [] = getRandomArray()
+        getRandomArray(),
+        getRandomArray(),
+        getRandomArray(),
+        getRandomArray(),
+        getRandomArray(),
+        getRandomArray(),
+        getRandomArray(),
+        getRandomArray(),
+        getRandomArray()
     ];
 
 }
