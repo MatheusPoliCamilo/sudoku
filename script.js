@@ -1,13 +1,9 @@
-//Constante utilizada para a validação do Sudoku
-const validator = [1, 2, 3, 4, 5, 6, 7, 8, 9];
-
 //Procedimentos realizados quando o documento está totalmente carregado
 document.addEventListener("DOMContentLoaded", () => {
 
     let boardNumbers = generateBoardNumbers();
     generateBoard(boardNumbers);
     let sudoku = new Sudoku(boardNumbers);
-    let validator = new Validator();
     Validator.checkBoard(sudoku);
 
     //Recarrega a página ao clicar no botão de "recarregar", resetando o tabuleiro
@@ -220,16 +216,16 @@ class Validator {
 
     static checkBoard(sudoku) {
 
-        verifyAndPaintWrongCells(sudoku.rows, 'row');
-        verifyAndPaintWrongCells(sudoku.columns, 'column');
-        verifyAndPaintWrongCells(sudoku.blocks, 'block');
+        verifyWrongCells(sudoku.rows, 'row');
+        verifyWrongCells(sudoku.columns, 'column');
+        verifyWrongCells(sudoku.blocks, 'block');
 
     }
 
 }
 
 //Verifica quais células do tabuleiro estão com números incorretos e marca elas
-function verifyAndPaintWrongCells(arrays, sudokuElement) {
+function verifyWrongCells(arrays, sudokuElement) {
 
     arrays.forEach((array, key) => {
 
@@ -267,8 +263,7 @@ function verifyAndPaintWrongCells(arrays, sudokuElement) {
 
                                 if (key === i) {
 
-                                    document.querySelectorAll(`.bloco${i}`)[indexWrong].classList.add('error');
-                                    document.querySelectorAll(`.bloco${i}`)[secondIndexWrong].classList.add('error');
+                                    paintCells(i, indexWrong, secondIndexWrong, 'block');
 
                                 }
 
@@ -278,15 +273,13 @@ function verifyAndPaintWrongCells(arrays, sudokuElement) {
 
                         case 'column':
 
-                            $($(`table tr > td:nth-child(${key + 1})`)[indexWrong]).addClass('error');
-                            $($(`table tr > td:nth-child(${key + 1})`)[secondIndexWrong]).addClass('error');
+                            paintCells(key, indexWrong, secondIndexWrong, 'column');
 
                             break;
 
                         case 'row':
 
-                            $($($('tr')[key]).children()[indexWrong]).addClass('error');
-                            $($($('tr')[key]).children()[secondIndexWrong]).addClass('error');
+                            paintCells(key, indexWrong, secondIndexWrong, 'row');
 
                             break;
 
@@ -305,6 +298,64 @@ function verifyAndPaintWrongCells(arrays, sudokuElement) {
         }
 
     });
+
+}
+
+//Altera a cor das células informadas, do elemento (linha, coluna ou bloco) informado
+function paintCells(element, firstIndex, secondIndex, elementCase) {
+
+    switch (elementCase) {
+
+        case 'row':
+
+            document.querySelectorAll('tr')[element].children[firstIndex].classList.add('error');
+            document.querySelectorAll('tr')[element].children[secondIndex].classList.add('error');
+
+            break;
+
+        case 'column':
+
+            document.querySelectorAll(`table tr > td:nth-child(${element + 1})`)[firstIndex].classList.add('error');
+            document.querySelectorAll(`table tr > td:nth-child(${element + 1})`)[secondIndex].classList.add('error');
+
+            break;
+
+        case 'block':
+
+            document.querySelectorAll(`.bloco${element}`)[firstIndex].classList.add('error');
+            document.querySelectorAll(`.bloco${element}`)[secondIndex].classList.add('error');
+
+            break;
+
+        default:
+
+            break;
+
+    }
+
+}
+
+//Altera a cor das células informadas da linha informada com a classe "error"
+function paintRow(row, firstIndex, secondIndex) {
+
+    document.querySelectorAll('tr')[row].children[firstIndex].classList.add('error');
+    document.querySelectorAll('tr')[row].children[secondIndex].classList.add('error');
+
+}
+
+//Altera a cor das células informadas do bloco informado com a classe "error"
+function paintBlock(block, firstIndex, secondIndex) {
+
+    document.querySelectorAll(`.bloco${block}`)[firstIndex].classList.add('error');
+    document.querySelectorAll(`.bloco${block}`)[secondIndex].classList.add('error');
+
+}
+
+//Altera a cor das das células informadas da coluna informada com a classe "error"
+function paintColumn(column, firstIndex, secondIndex) {
+
+    document.querySelectorAll(`table tr > td:nth-child(${column + 1})`)[firstIndex].classList.add('error');
+    document.querySelectorAll(`table tr > td:nth-child(${column + 1})`)[secondIndex].classList.add('error');
 
 }
 
