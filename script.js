@@ -7,9 +7,49 @@ document.addEventListener("DOMContentLoaded", () => {
     Validator.checkBoard(sudoku);
 
     //Recarrega a página ao clicar no botão de "recarregar", resetando o tabuleiro
-    document.querySelector('#btn-reload').addEventListener('click', () => {
+    document.querySelector('#btn-reset').addEventListener('click', () => {
 
         location.reload();
+
+    });
+
+    document.querySelectorAll('.cell').forEach((cell) => {
+
+        cell.addEventListener('click', () => {
+
+            document.querySelectorAll('.cell').forEach((cell) => {
+
+                cell.classList.remove('selected');
+
+            });
+
+            cell.classList.add('selected');
+
+        });
+
+    });
+
+    document.querySelectorAll('.numbers > div').forEach(function (div) {
+
+        div.addEventListener('click', () => {
+
+            if (document.querySelector('.selected')) {
+
+                document.querySelector('.selected').innerHTML = div.innerHTML;
+
+            }
+
+        });
+
+    });
+
+    document.querySelector('#btn-delete').addEventListener('click', () => {
+
+        if (document.querySelector('.selected')) {
+
+            document.querySelector('.selected').innerHTML = '';
+
+        }
 
     });
 
@@ -322,8 +362,8 @@ function paintCells(element, firstIndex, secondIndex, elementCase) {
 
         case 'block':
 
-            document.querySelectorAll(`.bloco${element}`)[firstIndex].classList.add('error');
-            document.querySelectorAll(`.bloco${element}`)[secondIndex].classList.add('error');
+            document.querySelectorAll(`.block${element}`)[firstIndex].classList.add('error');
+            document.querySelectorAll(`.block${element}`)[secondIndex].classList.add('error');
 
             break;
 
@@ -346,8 +386,8 @@ function paintRow(row, firstIndex, secondIndex) {
 //Altera a cor das células informadas do bloco informado com a classe "error"
 function paintBlock(block, firstIndex, secondIndex) {
 
-    document.querySelectorAll(`.bloco${block}`)[firstIndex].classList.add('error');
-    document.querySelectorAll(`.bloco${block}`)[secondIndex].classList.add('error');
+    document.querySelectorAll(`.block${block}`)[firstIndex].classList.add('error');
+    document.querySelectorAll(`.block${block}`)[secondIndex].classList.add('error');
 
 }
 
@@ -372,21 +412,19 @@ function hasRepeatedNumbers(array) {
 //Retorna um array com 9 números aleatórios entre 0 e 9
 function getRandomArray() {
 
-    return [
-        getRandomNumber(),
-        getRandomNumber(),
-        getRandomNumber(),
-        getRandomNumber(),
-        getRandomNumber(),
-        getRandomNumber(),
-        getRandomNumber(),
-        getRandomNumber(),
-        getRandomNumber(),
-    ];
+    let randomArray = [];
+
+    for (let i = 0; i < 9; i++) {
+
+        randomArray.push(getRandomNumber());
+
+    }
+
+    return randomArray;
 
 }
 
-//Gera um número aleatório com probabilidade, qualquer número que não esteja entre 1 e 9 se torna 0
+//Retorna um número aleatório de 0 a 9
 function getRandomNumber() {
 
     if (Math.floor((Math.random() * 35)) > 9) {
@@ -400,67 +438,36 @@ function getRandomNumber() {
 }
 
 //Gera manualmente um array multidimensional com os valores aleatórios entre 0 e 9 para cada célula do Sudoku
-//Valor 0 significa célula vazia no tabuleiro e ele possui probabilidade aumentada
+//Valor 0 significa célula vazia no tabuleiro
 function generateBoardNumbers() {
 
-    return [
-        getRandomArray(),
-        getRandomArray(),
-        getRandomArray(),
-        getRandomArray(),
-        getRandomArray(),
-        getRandomArray(),
-        getRandomArray(),
-        getRandomArray(),
-        getRandomArray()
-    ];
+    let randomArray = [];
+
+    for (let i = 0; i < 9; i++) {
+
+        randomArray.push(getRandomArray());
+
+    }
+
+    return randomArray;
 
 }
 
 //Completa o tabuleiro do Sudoku baseado no array multidimensional informado
 function generateBoard(boardNumbers) {
 
-    boardNumbers.forEach((arrayRow, rowNumber) => {
+    boardNumbers.flat().forEach((cell, cellKey) => {
 
-        let boardRow = jQueryElementRow(rowNumber);
+        if (cell !== 0) {
 
-        writeOnRow(boardRow, arrayRow);
+            document.querySelectorAll('td')[cellKey].innerText = cell;
 
-    });
+        } else {
 
-}
-
-//Retorna o elemento jQuery da linha especificada do tabuleiro
-function jQueryElementRow(rowNumber) {
-
-    return $($('tr')[rowNumber]);
-
-}
-
-//Escreve na linha do tabuleiro especificada os números informados
-function writeOnRow(boardRow, arrayRow) {
-
-    boardRow.find('td').each((cellNumber, boardCell) => {
-
-        //Armazena o número para escrever na célula do tabuleiro em uma variável de escopo
-        let numberToWrite = arrayRow[cellNumber];
-
-        if (numberToWrite === 0) {
-
-            //Não escreve na célula do tabuleiro caso o valor do array multidimensional seja 0, prosseguindo com o loop
-            return;
+            document.querySelectorAll('td')[cellKey].classList.add('cell');
 
         }
 
-        writeOnCell(boardCell, numberToWrite);
-
     });
-
-}
-
-//Escreve na célula do tabuleiro especificada o número informado
-function writeOnCell(boardCell, numberToWrite) {
-
-    $(boardCell).html(numberToWrite);
 
 }

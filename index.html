@@ -1,222 +1,284 @@
 <html lang="en">
 
-<script src="https://code.jquery.com/jquery-3.4.1.js"
-        integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
-        crossorigin="anonymous"></script>
-
 <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.11/lodash.min.js"></script>
+<script src="https://kit.fontawesome.com/5a7c2184a6.js"></script>
 
 <script src="script.js"></script>
 
-    <style>
+<style>
 
-        table {
+    table {
 
-            border: 3px solid #344861;
+        border: 3px solid #344861;
+        border-collapse: collapse;
 
-        }
+    }
 
-        td {
+    td {
 
-            height: 50px;
-            width: 60px;
-            background-color: white;
-            border: 1px solid #bec6d4;
-            text-align: center;
-            font-family: Courier New, sans-serif;
-            font-size: 30px;
-            color: #344861;
+        height: 50px;
+        width: 60px;
+        background-color: white;
+        border: 1px solid #bec6d4;
+        text-align: center;
+        font-family: Courier New, sans-serif;
+        font-size: 35px;
+        color: #344861;
 
-        }
+    }
 
-        td:hover {
+    .border-bottom td {
 
-            background-color: #bbdefb;
+        border-bottom: 2px solid #344861;
 
-        }
+    }
 
-        .border-bottom td {
+    .column3, .column6 {
 
-            border-bottom: 2px solid #344861;
+        border-right: 2px solid #344861;
 
-        }
+    }
 
-        table {
+    .container {
 
-            border-collapse: collapse;
+        display: flex;
 
-        }
+    }
 
-        .column3, .column6 {
+    .numbers {
 
-            border-right: 2px solid #344861;
+        margin-top: 10px;
+        font-family: Courier New, sans-serif;
+        font-size: 40px;
+        font-weight: bold;
+        color: #007bff;
 
-        }
+    }
 
-        .error {
+    .numbers div {
 
-            background-color: #f7cfd6;
-            color: red;
+        margin-right: 20px;
+        margin-left: 20px;
+        cursor: pointer;
 
-        }
+    }
 
-        .container {
+    .buttons {
 
-            display: flex;
+        flex-direction: column;
+        margin-left: 20px;
 
-        }
+    }
 
-        .buttons{
+    .error {
 
-            flex-direction: column;
-            margin-left: 20px;
+        background-color: #f7cfd6;
+        color: red;
 
-        }
+    }
 
-        #btn-reload {
-            padding: 15px;
-            font-family: sans-serif, serif;
-            font-size: 20px;
-            color: white;
-            background-color: #007bff;
-            border: 1px solid transparent;
-            border-radius: .25rem;
-            cursor: pointer;
-        }
+    .cell {
 
-        #btn-reload:hover {
-            background-color: #0062cb;
-        }
+        cursor: pointer;
 
-    </style>
+    }
 
-    <head>
-        <meta charset="UTF-8">
-        <title>Sudoku</title>
-    </head>
+    .selected {
 
-    <body>
+        background-color: #bbdefb
 
-        <div class="container">
+    }
 
-            <table>
+    .cell:hover {
 
-                <tr>
-                    <td class="bloco0"></td>
-                    <td class="bloco0"></td>
-                    <td class="column3 bloco0"></td>
-                    <td class="bloco1"></td>
-                    <td class="bloco1"></td>
-                    <td class="column6 bloco1"></td>
-                    <td class="bloco2"></td>
-                    <td class="bloco2"></td>
-                    <td class="bloco2"></td>
-                </tr>
+        background-color: #bbdefb;
 
-                <tr>
-                    <td class="bloco0"></td>
-                    <td class="bloco0"></td>
-                    <td class="column3 bloco0"></td>
-                    <td class="bloco1"></td>
-                    <td class="bloco1"></td>
-                    <td class="column6 bloco1"></td>
-                    <td class="bloco2"></td>
-                    <td class="bloco2"></td>
-                    <td class="bloco2"></td>
-                </tr>
+    }
 
-                <tr class="border-bottom">
-                    <td class="bloco0"></td>
-                    <td class="bloco0"></td>
-                    <td class="column3 bloco0"></td>
-                    <td class="bloco1"></td>
-                    <td class="bloco1"></td>
-                    <td class="column6 bloco1"></td>
-                    <td class="bloco2"></td>
-                    <td class="bloco2"></td>
-                    <td class="bloco2"></td>
-                </tr>
+    #btn-delete {
 
-                <tr>
-                    <td class="bloco3"></td>
-                    <td class="bloco3"></td>
-                    <td class="column3 bloco3"></td>
-                    <td class="bloco4"></td>
-                    <td class="bloco4"></td>
-                    <td class="column6 bloco4"></td>
-                    <td class="bloco5"></td>
-                    <td class="bloco5"></td>
-                    <td class="bloco5"></td>
-                </tr>
+        display: flex;
+        flex-direction: column;
+        cursor: pointer;
 
-                <tr>
-                    <td class="bloco3"></td>
-                    <td class="bloco3"></td>
-                    <td class="column3 bloco3"></td>
-                    <td class="bloco4"></td>
-                    <td class="bloco4"></td>
-                    <td class="column6 bloco4"></td>
-                    <td class="bloco5"></td>
-                    <td class="bloco5"></td>
-                    <td class="bloco5"></td>
-                </tr>
+    }
 
-                <tr class="border-bottom">
-                    <td class="bloco3"></td>
-                    <td class="bloco3"></td>
-                    <td class="column3 bloco3"></td>
-                    <td class="bloco4"></td>
-                    <td class="bloco4"></td>
-                    <td class="column6 bloco4"></td>
-                    <td class="bloco5"></td>
-                    <td class="bloco5"></td>
-                    <td class="bloco5"></td>
-                </tr>
+    .options {
 
-                <tr>
-                    <td class="bloco6"></td>
-                    <td class="bloco6"></td>
-                    <td class='column3 bloco6'></td>
-                    <td class="bloco7"></td>
-                    <td class="bloco7"></td>
-                    <td class="column6 bloco7"></td>
-                    <td class="bloco8"></td>
-                    <td class="bloco8"></td>
-                    <td class="bloco8"></td>
-                </tr>
+        margin-top: 10px;
+        margin-left: 25px;
+        font-family: Monospaced, monospace;
+        color: #344861;
 
-                <tr>
-                    <td class="bloco6"></td>
-                    <td class="bloco6"></td>
-                    <td class='column3 bloco6'></td>
-                    <td class="bloco7"></td>
-                    <td class="bloco7"></td>
-                    <td class="column6 bloco7"></td>
-                    <td class="bloco8"></td>
-                    <td class="bloco8"></td>
-                    <td class="bloco8"></td>
-                </tr>
+    }
 
-                <tr>
-                    <td class="bloco6"></td>
-                    <td class="bloco6"></td>
-                    <td class='column3 bloco6'></td>
-                    <td class="bloco7"></td>
-                    <td class="bloco7"></td>
-                    <td class="column6 bloco7"></td>
-                    <td class="bloco8"></td>
-                    <td class="bloco8"></td>
-                    <td class="bloco8"></td>
-                </tr>
+    #btn-reset {
+        padding: 15px;
+        font-family: sans-serif, serif;
+        font-size: 20px;
+        color: white;
+        background-color: #007bff;
+        border: 1px solid transparent;
+        border-radius: .25rem;
+        cursor: pointer;
+    }
 
-            </table>
+    #btn-reset:hover {
+        background-color: #0062cb;
+    }
 
-            <div class="buttons">
-                <button id="btn-reload">Recarregar</button>
-            </div>
+</style>
 
-        </div>
+<head>
+    <meta charset="UTF-8">
+    <title>Sudoku</title>
+</head>
 
-    </body>
+<body>
+
+<div class="container">
+
+    <table id="sudoku-board">
+
+        <tr>
+            <td class="block0"></td>
+            <td class="block0"></td>
+            <td class="column3 block0"></td>
+            <td class="block1"></td>
+            <td class="block1"></td>
+            <td class="column6 block1"></td>
+            <td class="block2"></td>
+            <td class="block2"></td>
+            <td class="block2"></td>
+        </tr>
+
+        <tr>
+            <td class="block0"></td>
+            <td class="block0"></td>
+            <td class="column3 block0"></td>
+            <td class="block1"></td>
+            <td class="block1"></td>
+            <td class="column6 block1"></td>
+            <td class="block2"></td>
+            <td class="block2"></td>
+            <td class="block2"></td>
+        </tr>
+
+        <tr class="border-bottom">
+            <td class="block0"></td>
+            <td class="block0"></td>
+            <td class="column3 block0"></td>
+            <td class="block1"></td>
+            <td class="block1"></td>
+            <td class="column6 block1"></td>
+            <td class="block2"></td>
+            <td class="block2"></td>
+            <td class="block2"></td>
+        </tr>
+
+        <tr>
+            <td class="block3"></td>
+            <td class="block3"></td>
+            <td class="column3 block3"></td>
+            <td class="block4"></td>
+            <td class="block4"></td>
+            <td class="column6 block4"></td>
+            <td class="block5"></td>
+            <td class="block5"></td>
+            <td class="block5"></td>
+        </tr>
+
+        <tr>
+            <td class="block3"></td>
+            <td class="block3"></td>
+            <td class="column3 block3"></td>
+            <td class="block4"></td>
+            <td class="block4"></td>
+            <td class="column6 block4"></td>
+            <td class="block5"></td>
+            <td class="block5"></td>
+            <td class="block5"></td>
+        </tr>
+
+        <tr class="border-bottom">
+            <td class="block3"></td>
+            <td class="block3"></td>
+            <td class="column3 block3"></td>
+            <td class="block4"></td>
+            <td class="block4"></td>
+            <td class="column6 block4"></td>
+            <td class="block5"></td>
+            <td class="block5"></td>
+            <td class="block5"></td>
+        </tr>
+
+        <tr>
+            <td class="block6"></td>
+            <td class="block6"></td>
+            <td class='column3 block6'></td>
+            <td class="block7"></td>
+            <td class="block7"></td>
+            <td class="column6 block7"></td>
+            <td class="block8"></td>
+            <td class="block8"></td>
+            <td class="block8"></td>
+        </tr>
+
+        <tr>
+            <td class="block6"></td>
+            <td class="block6"></td>
+            <td class='column3 block6'></td>
+            <td class="block7"></td>
+            <td class="block7"></td>
+            <td class="column6 block7"></td>
+            <td class="block8"></td>
+            <td class="block8"></td>
+            <td class="block8"></td>
+        </tr>
+
+        <tr>
+            <td class="block6"></td>
+            <td class="block6"></td>
+            <td class='column3 block6'></td>
+            <td class="block7"></td>
+            <td class="block7"></td>
+            <td class="column6 block7"></td>
+            <td class="block8"></td>
+            <td class="block8"></td>
+            <td class="block8"></td>
+        </tr>
+
+    </table>
+
+    <div class="buttons">
+        <button id="btn-reset">
+            <i class="fas fa-sync"></i> Reiniciar
+        </button>
+    </div>
+
+</div>
+
+</body>
+
+<div class="container options">
+    <div id="btn-delete">
+        <i class="fas fa-eraser fa-2x" style="padding-left: 10px"></i>
+        <b>Apagar</b>
+    </div>
+</div>
+
+<div class="container numbers">
+
+    <div>1</div>
+    <div>2</div>
+    <div>3</div>
+    <div>4</div>
+    <div>5</div>
+    <div>6</div>
+    <div>7</div>
+    <div>8</div>
+    <div>9</div>
+
+</div>
 
 </html>
