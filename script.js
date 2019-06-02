@@ -13,6 +13,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     });
 
+    //Ao clicar em uma célula digitável, marca ela como selecionada
     document.querySelectorAll('.cell').forEach((cell) => {
 
         cell.addEventListener('click', () => {
@@ -29,6 +30,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
     });
 
+    //Ao clicar em um dos números de 1 a 9 abaixo do tabuleiro, coloca o valor clicado na célula do sudoku que
+    //está selecionada
     document.querySelectorAll('.numbers > div').forEach(function (div) {
 
         div.addEventListener('click', () => {
@@ -37,17 +40,42 @@ document.addEventListener("DOMContentLoaded", () => {
 
                 document.querySelector('.selected').innerHTML = div.innerHTML;
 
+                let row = document.querySelector('.selected').getAttribute('rowKey');
+                let cell = document.querySelector('.selected').getAttribute('cellKey');
+                boardNumbers[row][cell] = ~~div.innerHTML;
+
+                sudoku = new Sudoku(boardNumbers);
+                Validator.checkBoard(sudoku);
+
             }
 
         });
 
     });
 
+    //Ao clicar no apagador abaixo do tabuleiro, limpa a célula do sudoku que está selecionada
     document.querySelector('#btn-delete').addEventListener('click', () => {
 
         if (document.querySelector('.selected')) {
 
             document.querySelector('.selected').innerHTML = '';
+
+            let row = document.querySelector('.selected').getAttribute('rowKey');
+            let cell = document.querySelector('.selected').getAttribute('cellKey');
+            boardNumbers[row][cell] = 0;
+
+            document.querySelectorAll('td').forEach(function (cell) {
+
+                if (cell.classList.contains('error')) {
+
+                    cell.classList.remove('error');
+
+                }
+
+            });
+
+            sudoku = new Sudoku(boardNumbers);
+            Validator.checkBoard(sudoku);
 
         }
 
@@ -299,11 +327,11 @@ function verifyWrongCells(arrays, sudokuElement) {
 
                         case 'block':
 
-                            for (let i = 0; i < 8; i++) {
+                            for (let i = 0; i < 9; i++) {
 
                                 if (key === i) {
 
-                                    paintCells(i, indexWrong, secondIndexWrong, 'block');
+                                    paintCells(i, indexWrong, secondIndexWrong, sudokuElement);
 
                                 }
 
@@ -313,13 +341,13 @@ function verifyWrongCells(arrays, sudokuElement) {
 
                         case 'column':
 
-                            paintCells(key, indexWrong, secondIndexWrong, 'column');
+                            paintCells(key, indexWrong, secondIndexWrong, sudokuElement);
 
                             break;
 
                         case 'row':
 
-                            paintCells(key, indexWrong, secondIndexWrong, 'row');
+                            paintCells(key, indexWrong, secondIndexWrong, sudokuElement);
 
                             break;
 
@@ -372,30 +400,6 @@ function paintCells(element, firstIndex, secondIndex, elementCase) {
             break;
 
     }
-
-}
-
-//Altera a cor das células informadas da linha informada com a classe "error"
-function paintRow(row, firstIndex, secondIndex) {
-
-    document.querySelectorAll('tr')[row].children[firstIndex].classList.add('error');
-    document.querySelectorAll('tr')[row].children[secondIndex].classList.add('error');
-
-}
-
-//Altera a cor das células informadas do bloco informado com a classe "error"
-function paintBlock(block, firstIndex, secondIndex) {
-
-    document.querySelectorAll(`.block${block}`)[firstIndex].classList.add('error');
-    document.querySelectorAll(`.block${block}`)[secondIndex].classList.add('error');
-
-}
-
-//Altera a cor das das células informadas da coluna informada com a classe "error"
-function paintColumn(column, firstIndex, secondIndex) {
-
-    document.querySelectorAll(`table tr > td:nth-child(${column + 1})`)[firstIndex].classList.add('error');
-    document.querySelectorAll(`table tr > td:nth-child(${column + 1})`)[secondIndex].classList.add('error');
 
 }
 
@@ -456,17 +460,24 @@ function generateBoardNumbers() {
 //Completa o tabuleiro do Sudoku baseado no array multidimensional informado
 function generateBoard(boardNumbers) {
 
-    boardNumbers.flat().forEach((cell, cellKey) => {
+    boardNumbers.forEach((row, rowKey) => {
 
-        if (cell !== 0) {
+        document.querySelectorAll('tr')[rowKey].querySelectorAll('td').forEach(function (cell, cellKey) {
 
-            document.querySelectorAll('td')[cellKey].innerText = cell;
+            cell.setAttribute('rowKey', rowKey);
+            cell.setAttribute('cellKey', cellKey);
 
-        } else {
+            if (row[cellKey] !== 0) {
 
-            document.querySelectorAll('td')[cellKey].classList.add('cell');
+                cell.innerHTML = row[cellKey];
 
-        }
+            } else {
+
+                cell.classList.add('cell');
+
+            }
+
+        });
 
     });
 
