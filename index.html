@@ -63,13 +63,6 @@
 
     }
 
-    .buttons {
-
-        flex-direction: column;
-        margin-left: 20px;
-
-    }
-
     .error {
 
         background-color: #f7cfd6;
@@ -83,17 +76,24 @@
 
     }
 
+    .blocked {
+
+        font-weight: bolder;
+
+    }
+
     .selected {
 
         background-color: #bbdefb
 
     }
 
-    #btn-delete {
+    .btn {
 
         display: flex;
         flex-direction: column;
         cursor: pointer;
+        align-items: center;
 
     }
 
@@ -104,21 +104,6 @@
         font-family: Monospaced, monospace;
         color: #344861;
 
-    }
-
-    #btn-reset {
-        padding: 15px;
-        font-family: sans-serif, serif;
-        font-size: 20px;
-        color: white;
-        background-color: #007bff;
-        border: 1px solid transparent;
-        border-radius: .25rem;
-        cursor: pointer;
-    }
-
-    #btn-reset:hover {
-        background-color: #0062cb;
     }
 
 </style>
@@ -244,20 +229,18 @@
 
     </table>
 
-    <div class="buttons">
-        <button id="btn-reset">
-            <i class="fas fa-sync"></i> Reiniciar
-        </button>
-    </div>
-
 </div>
 
 </body>
 
 <div class="container options">
-    <div id="btn-delete">
-        <i class="fas fa-eraser fa-2x" style="padding-left: 10px"></i>
+    <div id="btn-delete" class="btn">
+        <i class="fas fa-eraser fa-2x"></i>
         <b>Apagar</b>
+    </div>
+    <div id="btn-reset" class="btn" style="margin-left: 25px">
+        <i class="fas fa-sync-alt fa-2x"></i>
+        <b>Recarregar</b>
     </div>
 </div>
 

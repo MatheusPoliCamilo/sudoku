@@ -44,6 +44,16 @@ document.addEventListener("DOMContentLoaded", () => {
                 let cell = document.querySelector('.selected').getAttribute('cellKey');
                 boardNumbers[row][cell] = ~~div.innerHTML;
 
+                document.querySelectorAll('td').forEach(function (cell) {
+
+                    if (cell.classList.contains('error')) {
+
+                        cell.classList.remove('error');
+
+                    }
+
+                });
+
                 sudoku = new Sudoku(boardNumbers);
                 Validator.checkBoard(sudoku);
 
@@ -300,6 +310,7 @@ function verifyWrongCells(arrays, sudokuElement) {
         if (hasRepeatedNumbers(array)) {
 
             let values = [];
+            let wrongIndexes = [];
 
             array.forEach((number) => {
 
@@ -310,6 +321,16 @@ function verifyWrongCells(arrays, sudokuElement) {
                 });
 
                 if (wrongNumber !== 0 && wrongNumber !== undefined) {
+
+                    array.forEach(function (number, key) {
+
+                        if (number === wrongNumber) {
+
+                            wrongIndexes.push(key);
+
+                        }
+
+                    });
 
                     let indexWrong = _.findIndex(array, (number) => {
 
@@ -413,47 +434,21 @@ function hasRepeatedNumbers(array) {
 
 }
 
-//Retorna um array com 9 números aleatórios entre 0 e 9
-function getRandomArray() {
-
-    let randomArray = [];
-
-    for (let i = 0; i < 9; i++) {
-
-        randomArray.push(getRandomNumber());
-
-    }
-
-    return randomArray;
-
-}
-
-//Retorna um número aleatório de 0 a 9
-function getRandomNumber() {
-
-    if (Math.floor((Math.random() * 35)) > 9) {
-
-        return 0;
-
-    }
-
-    return Math.floor((Math.random() * 9));
-
-}
-
 //Gera manualmente um array multidimensional com os valores aleatórios entre 0 e 9 para cada célula do Sudoku
 //Valor 0 significa célula vazia no tabuleiro
 function generateBoardNumbers() {
 
-    let randomArray = [];
-
-    for (let i = 0; i < 9; i++) {
-
-        randomArray.push(getRandomArray());
-
-    }
-
-    return randomArray;
+    return [
+        [5,3,0,0,7,0,0,0,0],
+        [6,0,0,1,9,5,0,0,0],
+        [0,9,8,0,0,0,0,6,0],
+        [8,0,0,0,6,0,0,0,3],
+        [4,0,0,8,0,3,0,0,1],
+        [7,0,0,0,2,0,0,0,6],
+        [0,6,0,0,0,0,2,8,0],
+        [0,0,0,4,1,9,0,0,5],
+        [0,0,0,0,8,0,0,7,9],
+    ];
 
 }
 
@@ -470,6 +465,7 @@ function generateBoard(boardNumbers) {
             if (row[cellKey] !== 0) {
 
                 cell.innerHTML = row[cellKey];
+                cell.classList.add('blocked');
 
             } else {
 
