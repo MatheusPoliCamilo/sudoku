@@ -67,4 +67,4 @@ sudoku/
 
 ## Author
 
-**Matheus Poli** – [GitHub](https://github.com/MatheusPoliCamilo) – [LinkedIn](https://www.linkedin.com/in/matheus-poli-332593127/)
+**Matheus Poli** – [LinkedIn](https://www.linkedin.com/in/matheus-poli-332593127/)
